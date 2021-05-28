@@ -1,0 +1,26 @@
+{
+  "name": "yaangvu/sis-aws-sdk",
+  "description": "Laravel Sis Aws Sdk",
+  "type": "library",
+  "keywords": [
+    "toprate",
+    "api",
+    "aws-sdk"
+  ],
+  "license": "MIT",
+  "require": {
+    "php": "^6.0|^7.0|^7.3|^7.4|^8.0"
+  },
+  "authors": [
+    {
+      "name": "Yaang Vu",
+      "email": "yaangvu@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "autoload": {
+    "psr-4": {
+      "YaangVu\\LaravelAws\\": "src/"
+    }
+  }
+}
