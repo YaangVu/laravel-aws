@@ -1,10 +1,9 @@
 {
-  "name": "yaangvu/sis-aws-sdk",
+  "name": "yaangvu/laravel-aws",
   "description": "Laravel Sis Aws Sdk",
   "type": "library",
   "keywords": [
     "toprate",
-    "api",
     "aws-sdk"
   ],
   "license": "MIT",
