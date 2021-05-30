@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace YaangVu\LaravelAws;
+namespace YaangVu\LaravelAws\Impl;
 
 
 use Aws\Exception\AwsException;
