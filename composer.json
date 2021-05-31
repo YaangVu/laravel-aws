@@ -21,10 +21,10 @@
   "minimum-stability": "dev",
   "autoload": {
     "psr-4": {
-      "YaangVu\\LaravelAws\\": "src/",
-      "classmap": [
-        "src/Impl/*"
-      ]
-    }
+      "YaangVu\\LaravelAws\\": "src/"
+    },
+    "classmap": [
+      "src/Impl"
+    ]
   }
 }
