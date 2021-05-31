@@ -24,7 +24,7 @@
       "YaangVu\\LaravelAws\\": "src/"
     },
     "classmap": [
-      "src/Impl"
+      "src/impl"
     ]
   }
 }

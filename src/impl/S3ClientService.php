@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace YaangVu\LaravelAws\Impl;
+namespace YaangVu\LaravelAws\impl;
 
 use Aws\Exception\AwsException;
 use Aws\S3\Exception\S3Exception;
