@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace YaangVu\LaravelAws\Impl;
 
-
 use Aws\Exception\AwsException;
 use Aws\S3\Exception\S3Exception;
 use Aws\Sts\StsClient;
@@ -14,6 +13,7 @@ use Illuminate\Support\Facades\Log;
 use YaangVu\Exceptions\BadRequestException;
 use YaangVu\Exceptions\BaseException;
 use YaangVu\Exceptions\SystemException;
+use YaangVu\LaravelAws\StorageS3Service;
 
 class S3ClientService implements StorageS3Service
 {
