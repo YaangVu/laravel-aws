@@ -233,7 +233,7 @@ class S3ClientService implements StorageS3Service
         }
     }
 
-    public function createPresigned(string $url, string $expiration): object
+    public function createPresigned(string $url, string $expiration = ''): object
     {
         if (empty($url)) {
             throw new BadRequestException([__("required", ['attribute' => 'urlS3'])], new \Exception());
