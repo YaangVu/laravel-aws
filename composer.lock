@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3dfda548f972681f3c85f379509c4db2",
+    "content-hash": "713533b8e8c16f98de1fec16e27ec912",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -888,12 +888,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "210cc733e1004fc4fb2ab2f9ee8503e54a8f6ead"
+                "reference": "f76be89d78799edc20c832106338dab1aa814072"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/210cc733e1004fc4fb2ab2f9ee8503e54a8f6ead",
-                "reference": "210cc733e1004fc4fb2ab2f9ee8503e54a8f6ead",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/f76be89d78799edc20c832106338dab1aa814072",
+                "reference": "f76be89d78799edc20c832106338dab1aa814072",
                 "shasum": ""
             },
             "require": {
@@ -974,7 +974,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-05-27T17:18:37+00:00"
+            "time": "2021-06-01T10:23:06+00:00"
         },
         {
             "name": "psr/container",
@@ -1405,12 +1405,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/error-handler.git",
-                "reference": "4f0b4c3b7b1c8f8576bc48b47d411684a6c2413b"
+                "reference": "7af96b89dbbbedb018ef1a3a1a00263010fc85fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/error-handler/zipball/4f0b4c3b7b1c8f8576bc48b47d411684a6c2413b",
-                "reference": "4f0b4c3b7b1c8f8576bc48b47d411684a6c2413b",
+                "url": "https://api.github.com/repos/symfony/error-handler/zipball/7af96b89dbbbedb018ef1a3a1a00263010fc85fd",
+                "reference": "7af96b89dbbbedb018ef1a3a1a00263010fc85fd",
                 "shasum": ""
             },
             "require": {
@@ -1465,7 +1465,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-05-23T09:41:19+00:00"
+            "time": "2021-05-28T15:52:26+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -1851,12 +1851,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-kernel.git",
-                "reference": "2a6c5ddf2d21ba734c303f4c080f942bbe5de299"
+                "reference": "709e5a5cd1d309191fa4848d1c4d2e8f55e01321"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/2a6c5ddf2d21ba734c303f4c080f942bbe5de299",
-                "reference": "2a6c5ddf2d21ba734c303f4c080f942bbe5de299",
+                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/709e5a5cd1d309191fa4848d1c4d2e8f55e01321",
+                "reference": "709e5a5cd1d309191fa4848d1c4d2e8f55e01321",
                 "shasum": ""
             },
             "require": {
@@ -1913,7 +1913,6 @@
                 "symfony/console": "",
                 "symfony/dependency-injection": ""
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -1956,7 +1955,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-05-27T13:36:38+00:00"
+            "time": "2021-06-01T09:09:46+00:00"
         },
         {
             "name": "symfony/mime",
@@ -2798,12 +2797,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "94f5045dbffaa36b5a361f45ad47ef656a320041"
+                "reference": "1da9722b3d6d2cfbab7b3d178b8059b52471d7f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/94f5045dbffaa36b5a361f45ad47ef656a320041",
-                "reference": "94f5045dbffaa36b5a361f45ad47ef656a320041",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/1da9722b3d6d2cfbab7b3d178b8059b52471d7f1",
+                "reference": "1da9722b3d6d2cfbab7b3d178b8059b52471d7f1",
                 "shasum": ""
             },
             "require": {
@@ -2877,7 +2876,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-05-28T15:22:21+00:00"
+            "time": "2021-05-28T15:52:26+00:00"
         },
         {
             "name": "voku/portable-ascii",
@@ -3013,7 +3012,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^6.0|^7.0|^7.3|^7.4|^8.0"
+        "php": "^8.0"
     },
     "platform-dev": [],
     "plugin-api-version": "2.0.0"

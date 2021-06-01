@@ -8,19 +8,18 @@ interface StorageS3Service
     /**
      * Set the default version to use if none is provided
      *
-     * @param string $defaultVersion
+     * @param string $version
      *
      * @return static
      */
-    public function setDefaultVersion(string $defaultVersion): static;
+    public function setVersion(string $version): static;
 
     /**
      * Get the default version to use if none is provided
      *
      * @return string
      */
-    public function getDefaultVersion(): string;
-
+    public function getVersion(): string;
 
     /**
      * Set the default Access Key Id to use if none is provided
@@ -58,18 +57,18 @@ interface StorageS3Service
     /**
      * Set the default region to use if none is provided
      *
-     * @param string $defaultRegion
+     * @param string $region
      *
      * @return static
      */
-    public function setDefaultRegion(string $defaultRegion): static;
+    public function setRegion(string $region): static;
 
     /**
      * Get the default region to use if none is provided
      *
      * @return string
      */
-    public function getDefaultRegion(): string;
+    public function getRegion(): string;
 
     /**
      * Set the default duration expire to use if none is provided
@@ -91,19 +90,18 @@ interface StorageS3Service
     /**
      * Set the default bucket to use if none is provided
      *
-     * @param string $defaultBucket
+     * @param string $bucket
      *
      * @return static
      */
-    public function setDefaultBucket(string $defaultBucket): static;
+    public function setBucket(string $bucket): static;
 
     /**
      * Get the default bucket to use if none is provided
      *
      * @return string
      */
-    public function getDefaultBucket(): string;
-
+    public function getBucket(): string;
 
     /**
      * AWS Init Config Connect
@@ -127,6 +125,6 @@ interface StorageS3Service
      *
      * @return object
      */
-    public function createPresigned(string $url, string $expiration): object;
+    public function createPreSigned(string $url, string $expiration): string;
 
 }

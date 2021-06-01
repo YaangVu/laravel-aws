@@ -1,15 +1,16 @@
 <?php
 
-declare(strict_types=1);
+namespace YaangVu\LaravelAws\Impl;
 
-namespace YaangVu\LaravelAws\impl;
-
+use Aws\Credentials\Credentials;
 use Aws\Exception\AwsException;
 use Aws\S3\Exception\S3Exception;
-use Aws\Sts\StsClient;
 use Aws\S3\S3Client;
-use Aws\Credentials\Credentials;
-use Illuminate\Support\Facades\Log;
+use Aws\Sts\StsClient;
+use Exception;
+use JetBrains\PhpStorm\ArrayShape;
+use JetBrains\PhpStorm\Pure;
+use stdClass;
 use YaangVu\Exceptions\BadRequestException;
 use YaangVu\Exceptions\BaseException;
 use YaangVu\Exceptions\SystemException;
@@ -44,7 +45,7 @@ class S3ClientService implements StorageS3Service
      *
      * @var string
      */
-    private string $AWS_DEFAULT_REGION;
+    private string $AWS_REGION;
 
     /**
      * AWS The duration, in seconds, that the credentials should remain valid.
@@ -72,25 +73,24 @@ class S3ClientService implements StorageS3Service
         $this->init();
     }
 
-
     public function init(): void
     {
-        $this->setDefaultVersion(env('AWS_VERSION'));
-        $this->setDefaultRegion(env('AWS_DEFAULT_REGION'));
-        $this->setAccessKeyId(env('AWS_ACCESS_KEY_ID'));
-        $this->setSecretAccessKey(env('AWS_SECRET_ACCESS_KEY'));
-        $this->setDefaultBucket(env('AWS_BUCKET'));
-        $this->setDurationExpire(env('AWS_DURATION_EXPIRE'));
+        $this->setVersion(env('AWS_VERSION'))
+             ->setRegion(env('AWS_REGION'))
+             ->setAccessKeyId(env('AWS_ACCESS_KEY_ID'))
+             ->setSecretAccessKey(env('AWS_SECRET_ACCESS_KEY'))
+             ->setBucket(env('AWS_BUCKET'))
+             ->setDurationExpire(env('AWS_DURATION_EXPIRE'));
     }
 
-    public function setDefaultVersion(string $defaultVersion): static
+    public function setVersion(string $version): static
     {
-        $this->AWS_VERSION = $defaultVersion;
+        $this->AWS_VERSION = $version;
 
         return $this;
     }
 
-    public function getDefaultVersion(): string
+    public function getVersion(): string
     {
         return $this->AWS_VERSION;
     }
@@ -119,16 +119,16 @@ class S3ClientService implements StorageS3Service
         return $this->AWS_SECRET_ACCESS_KEY;
     }
 
-    public function setDefaultRegion(string $defaultRegion): static
+    public function setRegion(string $region): static
     {
-        $this->AWS_DEFAULT_REGION = $defaultRegion;
+        $this->AWS_REGION = $region;
 
         return $this;
     }
 
-    public function getDefaultRegion(): string
+    public function getRegion(): string
     {
-        return $this->AWS_DEFAULT_REGION;
+        return $this->AWS_REGION;
     }
 
     public function setDurationExpire(string $durationExpire): static
@@ -143,23 +143,24 @@ class S3ClientService implements StorageS3Service
         return $this->AWS_DURATION_EXPIRE;
     }
 
-    public function setDefaultBucket(string $defaultBucket): static
+    public function setBucket(string $bucket): static
     {
-        $this->AWS_BUCKET = $defaultBucket;
+        $this->AWS_BUCKET = $bucket;
 
         return $this;
     }
 
-    public function getDefaultBucket(): string
+    public function getBucket(): string
     {
         return $this->AWS_BUCKET;
     }
 
-    public function sharedConfig(): array
+    #[Pure] #[ArrayShape(['version' => "string", 'region' => "string", 'credentials' => "string[]"])]
+    public function getSharedConfig(): array
     {
         return [
-            'version'     => $this->getDefaultVersion(),
-            'region'      => $this->getDefaultRegion(),
+            'version'     => $this->getVersion(),
+            'region'      => $this->getRegion(),
             'credentials' => [
                 'key'    => $this->getAccessKeyId(),
                 'secret' => $this->getSecretAccessKey()
@@ -167,16 +168,19 @@ class S3ClientService implements StorageS3Service
         ];
     }
 
+    /**
+     * @return StsClient
+     */
     public function getStsClient(): StsClient
     {
         try {
-            return new StsClient($this->sharedConfig());
+            return new StsClient($this->getSharedConfig());
         } catch (AwsException $awsException) {
             throw new SystemException($awsException->getMessage() ?? __('system-500'), $awsException);
         }
     }
 
-    public function getcredentials(): Credentials
+    public function getCredentials(): Credentials
     {
         try {
             return new Credentials($this->getAccessKeyId(), $this->getSecretAccessKey());
@@ -190,12 +194,12 @@ class S3ClientService implements StorageS3Service
         try {
 
             $config = [
-                'version'     => $this->getDefaultVersion(),
-                'region'      => $this->getDefaultRegion(),
+                'version'     => $this->getVersion(),
+                'region'      => $this->getRegion(),
                 'credentials' => $this->getcredentials()
             ];
 
-            return new \Aws\S3\S3Client($config);
+            return new S3Client($config);
         } catch (S3Exception $s3Exception) {
             throw new SystemException($s3Exception->getMessage() ?? __('system-500'), $s3Exception);
         } catch (AwsException $awsException) {
@@ -203,25 +207,26 @@ class S3ClientService implements StorageS3Service
         }
     }
 
+    /**
+     * @return object
+     */
     public function getSessionTokenS3(): object
     {
         try {
-            Log::info("Call API Start: '" . microtime(true) . "'", $this->sharedConfig());
             $sessionToken = $this->getStsClient()->getSessionToken(['DurationSeconds' => $this->getDurationExpire()]);
-            Log::info("Call API End: '" . microtime(true) . "'", [$sessionToken]);
 
             $metadata = $sessionToken->get('@metadata');
 
             if (isset($metadata['statusCode']) && $metadata['statusCode'] != 200) {
-                throw new BaseException($sessionToken, new \Exception(), $metadata['statusCode']);
+                throw new BaseException($sessionToken, new Exception(), $metadata['statusCode']);
             }
 
-            $dataResponse              = new \stdClass();
+            $dataResponse              = new stdClass();
             $dataResponse->status      = $metadata['statusCode'];
             $dataResponse->credentials = $sessionToken->get('Credentials');
             $dataResponse->package     = [
-                'region' => $this->getDefaultRegion(),
-                'bucket' => $this->getDefaultBucket()
+                'region' => $this->getRegion(),
+                'bucket' => $this->getBucket()
             ];
 
             return $dataResponse;
@@ -233,10 +238,16 @@ class S3ClientService implements StorageS3Service
         }
     }
 
-    public function createPresigned(string $url, string $expiration = ''): object
+    /**
+     * @param string $url
+     * @param string $expiration
+     *
+     * @return string
+     */
+    public function createPreSigned(string $url, string $expiration = ''): string
     {
         if (empty($url)) {
-            throw new BadRequestException([__("required", ['attribute' => 'urlS3'])], new \Exception());
+            throw new BadRequestException([__("required", ['attribute' => 'urlS3'])], new Exception());
         }
 
         try {
@@ -246,17 +257,14 @@ class S3ClientService implements StorageS3Service
             $url = ltrim(parse_url($url, PHP_URL_PATH), '/');
 
             $command = $this->getS3Client()->getCommand('GetObject', [
-                'Bucket' => $this->getDefaultBucket(),
+                'Bucket' => $this->getBucket(),
                 'Key'    => $url
             ]);
 
-            $request                    = $this->getS3Client()->createPresignedRequest($command, $expiration);
-            $dataResponse               = new \stdClass();
-            $dataResponse->presignedUrl = $request->getUri()->__toString();
+            $request = $this->getS3Client()->createPresignedRequest($command, $expiration);
 
-            return $dataResponse;
-
-        } catch (AwsException $awsException) {
+            return $request->getUri()->__toString();
+        } catch (AwsException | Exception $awsException) {
             throw new SystemException($awsException->getMessage() ?? __('system-500'), $awsException);
         }
     }
