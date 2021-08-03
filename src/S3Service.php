@@ -280,10 +280,11 @@ class S3Service
         }
 
         try {
+            $path   = parse_url($url);
             $result = $this->getS3Client()->getObject(
                 [
                     'Bucket' => $this->getBucket(),
-                    'Key'    => ltrim($url, '/')
+                    'Key'    => ltrim($path, '/')
                 ]
             );
             $body   = $result->get('Body');
