@@ -267,4 +267,31 @@ class S3Service
             throw new SystemException($awsException->getMessage() ?? __('system-500'), $awsException);
         }
     }
+
+    /**
+     * @param string $url
+     *
+     * @return mixed
+     */
+    public function getObject(string $url): mixed
+    {
+        if (empty($url)) {
+            throw new BadRequestException([__("required", ['attribute' => 'urlS3'])], new Exception());
+        }
+
+        try {
+            $path   = parse_url($url);
+            $result = $this->getS3Client()->getObject(
+                [
+                    'Bucket' => $this->getBucket(),
+                    'Key'    => ltrim($path, '/')
+                ]
+            );
+            $body   = $result->get('Body');
+
+            return $body->read($result['ContentLength']);
+        } catch (AwsException | Exception $awsException) {
+            throw new SystemException($awsException->getMessage() ?? __('system-500'), $awsException);
+        }
+    }
 }
