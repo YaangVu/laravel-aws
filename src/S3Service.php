@@ -284,7 +284,7 @@ class S3Service
             $result = $this->getS3Client()->getObject(
                 [
                     'Bucket' => $this->getBucket(),
-                    'Key'    => ltrim($path, '/')
+                    'Key'    => ltrim($path['path'], '/')
                 ]
             );
             $body   = $result->get('Body');
