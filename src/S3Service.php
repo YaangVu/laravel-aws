@@ -44,7 +44,7 @@ class S3Service
      *
      * @var string
      */
-    private string $AWS_REGION;
+    private string $AWS_DEFAULT_REGION;
 
     /**
      * AWS The duration, in seconds, that the credentials should remain valid.
@@ -75,7 +75,7 @@ class S3Service
     public function init(): void
     {
         $this->setVersion(env('AWS_VERSION'))
-             ->setRegion(env('AWS_REGION'))
+             ->setRegion(env('AWS_DEFAULT_REGION'))
              ->setAccessKeyId(env('AWS_ACCESS_KEY_ID'))
              ->setSecretAccessKey(env('AWS_SECRET_ACCESS_KEY'))
              ->setBucket(env('AWS_BUCKET'))
@@ -120,14 +120,14 @@ class S3Service
 
     public function setRegion(string $region): static
     {
-        $this->AWS_REGION = $region;
+        $this->AWS_DEFAULT_REGION = $region;
 
         return $this;
     }
 
     public function getRegion(): string
     {
-        return $this->AWS_REGION;
+        return $this->AWS_DEFAULT_REGION;
     }
 
     public function setDurationExpire(string $durationExpire): static
